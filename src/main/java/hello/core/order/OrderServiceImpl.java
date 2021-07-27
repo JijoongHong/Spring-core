@@ -7,16 +7,17 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor //final 필드에 대한 생성자 만들어줌
+//@RequiredArgsConstructor //final 필드에 대한 생성자 만들어줌
 public class OrderServiceImpl implements OrderService{
 
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
     //private  final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    private final DiscountPolicy discountPolicy; //private final 불변, 필수 객체
     private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy; //private final 불변, 필수 객체
 
     /* 선택, 변경 가능성이 있는 의존관계
     @Autowired(required = false) => 주입 대상이 없어도 동작
@@ -33,11 +34,11 @@ public class OrderServiceImpl implements OrderService{
     */
 
     //생성자가 하나면 autowired 자동 주입
-    //public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-    //    this.discountPolicy = discountPolicy;
-    //    this.memberRepository = memberRepository;
-    //    System.out.println("1.OrderServiceImpl.OrderServiceImpl");
-    //}
+    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+        this.memberRepository = memberRepository;
+        System.out.println("1.OrderServiceImpl.OrderServiceImpl");
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
