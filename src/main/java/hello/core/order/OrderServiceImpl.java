@@ -5,10 +5,12 @@ import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor //final 필드에 대한 생성자 만들어줌
 public class OrderServiceImpl implements OrderService{
 
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -31,11 +33,11 @@ public class OrderServiceImpl implements OrderService{
     */
 
     //생성자가 하나면 autowired 자동 주입
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.discountPolicy = discountPolicy;
-        this.memberRepository = memberRepository;
-        System.out.println("1.OrderServiceImpl.OrderServiceImpl");
-    }
+    //public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    //    this.discountPolicy = discountPolicy;
+    //    this.memberRepository = memberRepository;
+    //    System.out.println("1.OrderServiceImpl.OrderServiceImpl");
+    //}
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
